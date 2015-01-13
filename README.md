@@ -5,9 +5,9 @@ Course Progress
 ===============
 
 - [x] Lesson 1
-![lesson1 screenshot](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson1-finished.png)
+![lesson1 screenshot](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson1-finished.png = 200x)
 - [x] Lesson 2
-![lesson2 screenshot](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson2-finished.png)
+![lesson2 screenshot](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson2-finished.png = 200x)
 - [ ] Lesson 3
 - [ ] Lesson 4a
 - [ ] Lesson 4b
