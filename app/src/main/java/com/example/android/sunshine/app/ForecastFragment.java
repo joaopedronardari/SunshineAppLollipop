@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +26,7 @@ import java.util.ArrayList;
 
 public class ForecastFragment extends Fragment {
 
-    public ForecastFragment() {
-    }
+    ArrayAdapter<String> mForecastAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class ForecastFragment extends Fragment {
         weekForecast.add("Sat - Sunny - 76/48");
 
         // ListView Adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        mForecastAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
@@ -56,7 +58,7 @@ public class ForecastFragment extends Fragment {
         // Search listview in tree
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         // Set Adapter
-        listView.setAdapter(adapter);
+        listView.setAdapter(mForecastAdapter);
 
         return rootView;
     }
@@ -73,19 +75,25 @@ public class ForecastFragment extends Fragment {
         switch (id) {
             case R.id.action_refresh:
                 FetchWeatherTask weatherTask = new FetchWeatherTask();
-                weatherTask.execute();
+                weatherTask.execute("94043");
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public class FetchWeatherTask extends AsyncTask<Void,Void,Void> {
+    public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
 
         private String TAG = FetchWeatherTask.class.getSimpleName();
 
+        private String postCode = null;
+
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String[] doInBackground(String... params) {
+
+            if (params.length == 0)
+                return null;
+
             // CodeSnip - Lesson 2
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
@@ -93,13 +101,37 @@ public class ForecastFragment extends Fragment {
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
+            //String forecastJsonStr = null;
+            String[] weatherForecasts = null;
+
+            String format = "json";
+            String units = "metric";
+            int numOfDays = 7;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are available at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+
+                final String QUERY_PARAM = "q";
+                final String MODE_PARAM = "mode";
+                final String UNITS_PARAM = "units";
+                final String DAYS_PARAM = "cnt";
+
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("http")
+                .authority("api.openweathermap.org")
+                .appendPath("data")
+                .appendPath("2.5")
+                .appendPath("forecast")
+                .appendPath("daily")
+                .appendQueryParameter(QUERY_PARAM, params[0])
+                .appendQueryParameter(MODE_PARAM, format)
+                .appendQueryParameter(UNITS_PARAM, units)
+                .appendQueryParameter(DAYS_PARAM, String.valueOf(numOfDays));
+
+                Log.i(TAG, builder.build().toString());
+                URL url = new URL(builder.build().toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -110,8 +142,7 @@ public class ForecastFragment extends Fragment {
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
-                    // Nothing to do.
-                    forecastJsonStr = null;
+                    return null;
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -124,15 +155,14 @@ public class ForecastFragment extends Fragment {
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    forecastJsonStr = null;
+                    return null;
                 }
-                forecastJsonStr = buffer.toString();
+
+                return Util.getWeatherDataFromJson(buffer.toString(),numOfDays);
             } catch (IOException e) {
                 Log.e(TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attempting
-                // to parse it.
-                forecastJsonStr = null;
+            } catch (JSONException e) {
+                Log.e(TAG, "Error ", e);
             } finally{
                 if (urlConnection != null) {
                     urlConnection.disconnect();
@@ -146,9 +176,18 @@ public class ForecastFragment extends Fragment {
                 }
             }
 
-            Log.i(TAG, forecastJsonStr);
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mForecastAdapter.clear();
+
+                for (String weather : result) {
+                    mForecastAdapter.add(weather);
+                }
+            }
         }
     }
 }
