@@ -8,6 +8,7 @@
     <!-- Forecast Fragment -->
     <string name="action_refresh">Refresh</string>
     <string name="action_map">Map</string>
+    <string name="action_share">Share</string>
     <string name="title_activity_detail">DetailActivity</string>
 
 

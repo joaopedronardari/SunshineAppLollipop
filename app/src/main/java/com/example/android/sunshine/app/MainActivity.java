@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
 
         switch (id) {
             case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_map:
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
