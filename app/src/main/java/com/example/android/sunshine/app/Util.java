@@ -1,11 +1,14 @@
 package com.example.android.sunshine.app;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.Date;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by anonymous on 13/01/2015.
@@ -87,5 +90,11 @@ public class Util {
         }
 
         return resultStrs;
+    }
+
+    public static String getPreferenceLocation(Context context) {
+        return PreferenceManager.
+                getDefaultSharedPreferences(context).
+                getString(context.getString(R.string.pref_location_key), "");
     }
 }
