@@ -42,6 +42,7 @@ public class DetailActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -68,7 +69,7 @@ public class DetailActivity extends ActionBarActivity {
                 TextView forecastDetailTextView = (TextView) rootView.findViewById(R.id.forecast_detail);
                 forecastDetailTextView.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
             }
-            
+
             return rootView;
         }
     }

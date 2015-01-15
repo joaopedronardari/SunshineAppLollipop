@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,12 +87,26 @@ public class ForecastFragment extends Fragment {
 
         switch (id) {
             case R.id.action_refresh:
-                FetchWeatherTask weatherTask = new FetchWeatherTask();
-                weatherTask.execute("94043");
+                updateWeather();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateWeather() {
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        String location = PreferenceManager.
+                getDefaultSharedPreferences(getActivity()).
+                getString(getString(R.string.pref_location_key), "");
+
+        weatherTask.execute(location);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
     }
 
     public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
@@ -117,7 +132,9 @@ public class ForecastFragment extends Fragment {
             String[] weatherForecasts = null;
 
             String format = "json";
-            String units = "metric";
+            String unit = PreferenceManager.
+                    getDefaultSharedPreferences(getActivity()).
+                    getString(getString(R.string.pref_unit_key),"metric");
             int numOfDays = 7;
 
             try {
@@ -139,7 +156,7 @@ public class ForecastFragment extends Fragment {
                 .appendPath("daily")
                 .appendQueryParameter(QUERY_PARAM, params[0])
                 .appendQueryParameter(MODE_PARAM, format)
-                .appendQueryParameter(UNITS_PARAM, units)
+                .appendQueryParameter(UNITS_PARAM, unit)
                 .appendQueryParameter(DAYS_PARAM, String.valueOf(numOfDays));
 
                 Log.i(TAG, builder.build().toString());

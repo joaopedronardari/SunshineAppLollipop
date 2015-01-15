@@ -1,0 +1,13 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_location_label">Location</string>
+    <string name="pref_location_key" translatable="false">location</string>
+    <string name="pref_location_default" translatable="false">94043</string>
+
+    <string name="pref_unit_label">Unit</string>
+    <string name="pref_unit_key" translatable="false">unit</string>
+    <string name="pref_unit_default" translatable="false">metric</string>
+
+</resources>
