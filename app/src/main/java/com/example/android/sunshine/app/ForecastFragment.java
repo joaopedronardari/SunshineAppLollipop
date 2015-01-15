@@ -89,18 +89,33 @@ public class ForecastFragment extends Fragment {
             case R.id.action_refresh:
                 updateWeather();
                 return true;
+            case R.id.action_map:
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q=" + getPreferenceLocation()));
+                startActivity(intent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void showMap(Uri geoLocation) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
     private void updateWeather() {
         FetchWeatherTask weatherTask = new FetchWeatherTask();
-        String location = PreferenceManager.
+        weatherTask.execute(getPreferenceLocation());
+    }
+
+    private String getPreferenceLocation() {
+        return PreferenceManager.
                 getDefaultSharedPreferences(getActivity()).
                 getString(getString(R.string.pref_location_key), "");
-
-        weatherTask.execute(location);
     }
 
     @Override
