@@ -17,8 +17,7 @@ package com.example.android.sunshine.app.test;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
-import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
+
 import com.example.android.sunshine.app.data.WeatherDbHelper;
 
 public class TestDb extends AndroidTestCase {
