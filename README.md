@@ -7,7 +7,7 @@ Course Progress
 - [x] Lesson 1
 - [x] Lesson 2
 - [x] Lesson 3
-- [ ] Lesson 4a
+- [x] Lesson 4a
 - [ ] Lesson 4b
 - [ ] Lesson 5
 - [ ] Lesson 6
@@ -28,3 +28,11 @@ Lesson 3
 ![lesson3 screenshot 2](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson3-finished2.png)
 ![lesson3 screenshot 3](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson3-finished3.png)
 ![lesson3 screenshot 4](https://raw.githubusercontent.com/joaopedronardari/SunshineAppLollipop/master/lesson3-finished4.png)
+
+Lesson 4a
+---------
+No UI alters, only in code.
+
+
+
+
