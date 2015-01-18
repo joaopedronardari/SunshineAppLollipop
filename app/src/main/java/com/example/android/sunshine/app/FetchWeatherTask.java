@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.example.android.sunshine.app.data.WeatherContract;
 
@@ -36,11 +35,9 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
     private String postCode = null;
 
     private Context context;
-    private ArrayAdapter<String>  mForecastAdapter;
 
-    public FetchWeatherTask(Context context, ArrayAdapter<String> mForecastAdapter) {
+    public FetchWeatherTask(Context context) {
         this.context = context;
-        this.mForecastAdapter = mForecastAdapter;
     }
 
     @Override
@@ -135,17 +132,6 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
         }
 
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(String[] result) {
-        if (result != null) {
-            mForecastAdapter.clear();
-
-            for (String weather : result) {
-                mForecastAdapter.add(weather);
-            }
-        }
     }
 
     private long addLocation(String locationSetting, String cityName, double lat, double lng) {
