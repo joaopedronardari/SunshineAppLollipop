@@ -264,7 +264,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
         }
 
         context.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, contentValuesArray);
-        
+
         return resultStrs;
     }
 
