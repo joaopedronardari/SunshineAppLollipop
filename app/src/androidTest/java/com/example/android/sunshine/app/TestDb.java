@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.sunshine.app.test;
+package com.example.android.sunshine.app;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
+import com.example.android.sunshine.app.data.WeatherContract;
 import com.example.android.sunshine.app.data.WeatherDbHelper;
 
 public class TestDb extends AndroidTestCase {
@@ -32,9 +36,6 @@ public class TestDb extends AndroidTestCase {
         db.close();
     }
 
-    /* TODO Uncomment for
-    4a - JUnit testing
-    https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/m-1633698603
     public void testInsertReadDb() {
 
         // Test data we're going to insert into the DB to see if it works.
@@ -50,13 +51,13 @@ public class TestDb extends AndroidTestCase {
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(LocationEntry.COLUMN_LOCATION_SETTING, testLocationSetting);
-        values.put(LocationEntry.COLUMN_CITY_NAME, testCityName);
-        values.put(LocationEntry.COLUMN_COORD_LAT, testLatitude);
-        values.put(LocationEntry.COLUMN_COORD_LONG, testLongitude);
+        values.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, testLocationSetting);
+        values.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, testCityName);
+        values.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, testLatitude);
+        values.put(WeatherContract.LocationEntry.COLUMN_COORD_LNG, testLongitude);
 
         long locationRowId;
-        locationRowId = db.insert(LocationEntry.TABLE_NAME, null, values);
+        locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, values);
 
         // Verify we got a row back.
         assertTrue(locationRowId != -1);
@@ -67,16 +68,16 @@ public class TestDb extends AndroidTestCase {
 
         // Specify which columns you want.
         String[] columns = {
-                LocationEntry._ID,
-                LocationEntry.COLUMN_LOCATION_SETTING,
-                LocationEntry.COLUMN_CITY_NAME,
-                LocationEntry.COLUMN_COORD_LAT,
-                LocationEntry.COLUMN_COORD_LONG
+                WeatherContract.LocationEntry._ID,
+                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING,
+                WeatherContract.LocationEntry.COLUMN_CITY_NAME,
+                WeatherContract.LocationEntry.COLUMN_COORD_LAT,
+                WeatherContract.LocationEntry.COLUMN_COORD_LNG
         };
 
         // A cursor is your primary interface to the query results.
         Cursor cursor = db.query(
-                LocationEntry.TABLE_NAME,  // Table to Query
+                WeatherContract.LocationEntry.TABLE_NAME,  // Table to Query
                 columns,
                 null, // Columns for the "where" clause
                 null, // Values for the "where" clause
@@ -88,16 +89,16 @@ public class TestDb extends AndroidTestCase {
         // If possible, move to the first row of the query results.
         if (cursor.moveToFirst()) {
             // Get the value in each column by finding the appropriate column index.
-            int locationIndex = cursor.getColumnIndex(LocationEntry.COLUMN_LOCATION_SETTING);
+            int locationIndex = cursor.getColumnIndex(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING);
             String location = cursor.getString(locationIndex);
 
-            int nameIndex = cursor.getColumnIndex((LocationEntry.COLUMN_CITY_NAME));
+            int nameIndex = cursor.getColumnIndex((WeatherContract.LocationEntry.COLUMN_CITY_NAME));
             String name = cursor.getString(nameIndex);
 
-            int latIndex = cursor.getColumnIndex((LocationEntry.COLUMN_COORD_LAT));
+            int latIndex = cursor.getColumnIndex((WeatherContract.LocationEntry.COLUMN_COORD_LAT));
             double latitude = cursor.getDouble(latIndex);
 
-            int longIndex = cursor.getColumnIndex((LocationEntry.COLUMN_COORD_LONG));
+            int longIndex = cursor.getColumnIndex((WeatherContract.LocationEntry.COLUMN_COORD_LNG));
             double longitude = cursor.getDouble(longIndex);
 
             // Hooray, data was returned!  Assert that it's the right data, and that the database
@@ -116,30 +117,30 @@ public class TestDb extends AndroidTestCase {
 
         // Fantastic.  Now that we have a location, add some weather!
         ContentValues weatherValues = new ContentValues();
-        weatherValues.put(WeatherEntry.COLUMN_LOC_KEY, locationRowId);
-        weatherValues.put(WeatherEntry.COLUMN_DATETEXT, "20141205");
-        weatherValues.put(WeatherEntry.COLUMN_DEGREES, 1.1);
-        weatherValues.put(WeatherEntry.COLUMN_HUMIDITY, 1.2);
-        weatherValues.put(WeatherEntry.COLUMN_PRESSURE, 1.3);
-        weatherValues.put(WeatherEntry.COLUMN_MAX_TEMP, 75);
-        weatherValues.put(WeatherEntry.COLUMN_MIN_TEMP, 65);
-        weatherValues.put(WeatherEntry.COLUMN_SHORT_DESC, "Asteroids");
-        weatherValues.put(WeatherEntry.COLUMN_WIND_SPEED, 5.5);
-        weatherValues.put(WeatherEntry.COLUMN_WEATHER_ID, 321);
-        */
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, locationRowId);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATETEXT, "20141205");
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 1.1);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, 1.2);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 1.3);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, 75);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, 65);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC, "Asteroids");
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, 5.5);
+        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, 321);
 
-        /**
-         * TODO YOUR CODE BELOW HERE FOR QUIZ
-         * QUIZ - 4a - InsertReadDbTest
-         * https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/e-1633698604/m-1633698605
-         **/
+        long weatherRowId;
+        weatherRowId = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, values);
+
+        // Verify we got a row back.
+        assertTrue(weatherRowId != -1);
+        Log.d(LOG_TAG, "New row id: " + weatherRowId);
 
         /* TODO Uncomment for
         4a - JUnit testing
         https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/m-1633698603
-        dbHelper.close();
+        dbHelper.close();*/
     }
-    */
+
 
     /* TODO Uncomment for
     4a - Simplify Tests
