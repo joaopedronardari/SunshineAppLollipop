@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
 /**
@@ -232,34 +231,40 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
         long locationID = addLocation(locationSetting, cityName, cityLatitude, cityLongitude);
 
         String[] resultStrs = new String[numDays];
-        for(int i = 0; i < weatherArray.length(); i++) {
-            // For now, using the format "Day, description, hi/low"
-            String day;
-            String description;
-            String highAndLow;
 
+
+
+        ContentValues[] contentValuesArray = new ContentValues[weatherArray.length()];
+
+        for(int i = 0; i < weatherArray.length(); i++) {
             // Get the JSON object representing the day
             JSONObject dayForecast = weatherArray.getJSONObject(i);
 
-            // The date/time is returned as a long.  We need to convert that
-            // into something human-readable, since most people won't read "1400356800" as
-            // "this saturday".
+            // Create actual contentValues
+            ContentValues values = new ContentValues();
+
+            // Put Values
+
             long dateTime = dayForecast.getLong(OWM_DATETIME);
-            day = getReadableDateString(dateTime);
+            values.put(WeatherContract.WeatherEntry.COLUMN_DATETEXT,getReadableDateString(dateTime));
+            values.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE,dayForecast.getDouble(OWM_PRESSURE));
+            values.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY,dayForecast.getDouble(OWM_HUMIDITY));
+            values.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,dayForecast.getDouble(OWM_WINDSPEED));
+            values.put(WeatherContract.WeatherEntry.COLUMN_DEGREES ,dayForecast.getDouble(OWM_WIND_DIRECTION));
 
-            // description is in a child array called "weather", which is 1 element long.
-            JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
-            description = weatherObject.getString(OWM_DESCRIPTION);
-
-            // Temperatures are in a child object called "temp".  Try not to name variables
-            // "temp" when working with temperature.  It confuses everybody.
             JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
-            double high = temperatureObject.getDouble(OWM_MAX);
-            double low = temperatureObject.getDouble(OWM_MIN);
+            values.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,temperatureObject.getDouble(OWM_MAX));
+            values.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,temperatureObject.getDouble(OWM_MIN));
 
-            highAndLow = formatHighLows(high, low);
-            resultStrs[i] = day + " - " + description + " - " + highAndLow;
+            JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
+            values.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,weatherObject.getInt(OWM_WEATHER_ID));
+            values.put(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,weatherObject.getString(OWM_DESCRIPTION));
+
+            resultStrs[i] = "work in progress";
         }
+
+        context.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, contentValuesArray);
+        
         return resultStrs;
     }
 
