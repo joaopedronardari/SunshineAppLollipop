@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
 import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
 import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
@@ -190,9 +191,6 @@ public class TestProvider extends AndroidTestCase {
          assertEquals(LocationEntry.CONTENT_ITEM_TYPE, type);
      }
 
-     /* TODO Uncomment for
-     4b - Updating and Deleting
-     https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098563/m-1675098564
      public void testUpdateLocation() {
          // Create a new map of values, where column names are the keys
          ContentValues values = TestDb.createNorthPoleLocationValues();
@@ -226,7 +224,6 @@ public class TestProvider extends AndroidTestCase {
 
          TestDb.validateCursor(cursor, updatedValues);
      }
-     */
 
      // Make sure we can still delete after adding/updating stuff
      public void testDeleteRecordsAtEnd() {
