@@ -186,13 +186,10 @@ public class WeatherProvider extends ContentProvider {
                  return WeatherContract.WeatherEntry.CONTENT_TYPE;
              case WEATHER:
                  return WeatherContract.WeatherEntry.CONTENT_TYPE;
-
-             /**
-              * TODO YOUR CODE BELOW HERE FOR QUIZ
-              * QUIZ - 4b - Coding the Content Provider : getType
-              * https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098546/m-1675098547
-              **/
-
+             case LOCATION_ID:
+                 return WeatherContract.LocationEntry.CONTENT_ITEM_TYPE;
+             case LOCATION:
+                 return WeatherContract.LocationEntry.CONTENT_TYPE;
              default:
                  throw new UnsupportedOperationException("Unknown uri: " + uri);
          }
