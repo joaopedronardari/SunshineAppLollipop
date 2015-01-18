@@ -90,7 +90,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         // ListView Adapter
         mForecastAdapter = new ArrayAdapter<String>(
                 getActivity(),
-                R.layout.list_item_forecast,
+                R.layout.list_item_forecast_classic,
                 R.id.list_item_forecast_textview,
                 weekForecast);
 
