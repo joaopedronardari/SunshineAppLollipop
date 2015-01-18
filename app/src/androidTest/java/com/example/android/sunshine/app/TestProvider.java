@@ -53,9 +53,6 @@ public class TestProvider extends AndroidTestCase {
          assertEquals(0, cursor.getCount());
          cursor.close();
 
-         /* TODO Uncomment for
-         4b - Implement Location_ID queries
-         https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098551/m-1675098552
          cursor = mContext.getContentResolver().query(
                  LocationEntry.CONTENT_URI,
                  null,
@@ -65,7 +62,6 @@ public class TestProvider extends AndroidTestCase {
          );
          assertEquals(0, cursor.getCount());
          cursor.close();
-         */
      }
 
      // Since we want each test to start with a clean slate, run deleteAllRecords
@@ -73,10 +69,6 @@ public class TestProvider extends AndroidTestCase {
      public void setUp() {
          deleteAllRecords();
      }
-
-     /* TODO Uncomment for
-     4b - Implement Location_ID queries
-     https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098551/m-1675098552
 
      public void testInsertReadProvider() {
 
@@ -166,7 +158,6 @@ public class TestProvider extends AndroidTestCase {
          );
          TestDb.validateCursor(weatherCursor, weatherValues);
      }
-	   */
 
      public void testGetType() {
          // content://com.example.android.sunshine.app/weather/

@@ -58,7 +58,7 @@ public class WeatherProvider extends ContentProvider {
 
      private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
 
-     static{
+    static{
          sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
          sWeatherByLocationSettingQueryBuilder.setTables(
                  WeatherContract.WeatherEntry.TABLE_NAME + " INNER JOIN " +
@@ -122,6 +122,20 @@ public class WeatherProvider extends ContentProvider {
          );
      }
 
+    private Cursor getLocationById(Uri uri, String[] projection, String sortOrder) {
+        String locationId = WeatherContract.LocationEntry.getLocationIdFromUri(uri);
+
+        return mOpenHelper.getReadableDatabase().query(
+                WeatherContract.LocationEntry.TABLE_NAME,
+                projection,
+                WeatherContract.LocationEntry._ID + " = ?",
+                new String[]{ locationId },
+                null,
+                null,
+                sortOrder
+        );
+    }
+
      @Override
      public boolean onCreate() {
          mOpenHelper = new WeatherDbHelper(getContext());
@@ -159,12 +173,24 @@ public class WeatherProvider extends ContentProvider {
                  );
                  break;
              }
-
-             /**
-              * TODO YOUR CODE BELOW HERE FOR QUIZ
-              * QUIZ - 4b - Implement Location_ID queries
-              * https://www.udacity.com/course/viewer#!/c-ud853/l-1576308909/e-1675098551/m-1675098552
-              **/
+             // "location"
+             case LOCATION: {
+                 retCursor = mOpenHelper.getReadableDatabase().query(
+                     WeatherContract.LocationEntry.TABLE_NAME,
+                     projection,
+                     selection,
+                     selectionArgs,
+                     null,
+                     null,
+                     sortOrder
+                 );
+                 break;
+             }
+             // "location/#"
+             case LOCATION_ID: {
+                 retCursor = getLocationById(uri, projection, sortOrder);
+                 break;
+             }
 
              default:
                  throw new UnsupportedOperationException("Unknown uri: " + uri);
