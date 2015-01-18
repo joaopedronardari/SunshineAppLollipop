@@ -53,7 +53,8 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
         String unit = PreferenceManager.
                 getDefaultSharedPreferences(context).
                 getString(context.getString(R.string.pref_unit_key),"metric");
-        int numOfDays = 7;
+        int numOfDays = 14;
+        String locationQuery = params[0];
 
         try {
             // Construct the URL for the OpenWeatherMap query
@@ -105,7 +106,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
                 return null;
             }
 
-            return Util.getWeatherDataFromJson(buffer.toString(),numOfDays);
+            return Util.getWeatherDataFromJson(buffer.toString(),numOfDays, locationQuery);
         } catch (IOException e) {
             Log.e(TAG, "Error ", e);
         } catch (JSONException e) {
