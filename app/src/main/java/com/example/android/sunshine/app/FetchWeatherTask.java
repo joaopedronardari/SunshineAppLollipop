@@ -1,11 +1,16 @@
 package com.example.android.sunshine.app;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import com.example.android.sunshine.app.data.WeatherContract;
 
 import org.json.JSONException;
 
@@ -135,6 +140,36 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
             for (String weather : result) {
                 mForecastAdapter.add(weather);
             }
+        }
+    }
+
+    private long addLocation(String locationSetting, String cityName, double lat, double lng) {
+
+        // Check if location exists in Database
+        Cursor cursor = context.getContentResolver().query(
+                WeatherContract.LocationEntry.CONTENT_URI,
+                new String[]{WeatherContract.LocationEntry._ID},
+                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ?",
+                new String[]{locationSetting},
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            // Exists
+            int locationIdIndex = cursor.getColumnIndex(WeatherContract.LocationEntry._ID);
+            return cursor.getLong(locationIdIndex);
+        } else {
+
+            // Adding values
+            ContentValues values = new ContentValues();
+            values.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING,locationSetting);
+            values.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME,cityName);
+            values.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT,lat);
+            values.put(WeatherContract.LocationEntry.COLUMN_COORD_LNG,lng);
+
+            // Insert new Location
+            Uri locationInsertUri = context.getContentResolver().insert(WeatherContract.LocationEntry.CONTENT_URI, values);
+            return ContentUris.parseId(locationInsertUri);
         }
     }
 }
