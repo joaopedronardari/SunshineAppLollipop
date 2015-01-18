@@ -113,11 +113,11 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
                 return null;
             }
 
-            return getWeatherDataFromJson(buffer.toString(), numOfDays, locationQuery);
+            getWeatherDataFromJson(buffer.toString(), numOfDays, locationQuery);
         } catch (IOException e) {
-            Log.e(TAG, "Error ", e);
+            Log.e(TAG, "Error IOException" + e.getMessage(), e);
         } catch (JSONException e) {
-            Log.e(TAG, "Error ", e);
+            Log.e(TAG, "Error JSONEXCEPTION " + e.getMessage(), e);
         } finally{
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -171,7 +171,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
-    private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays,
+    private void getWeatherDataFromJson(String forecastJsonStr, int numDays,
                                             String locationSetting)
             throws JSONException {
 
@@ -216,10 +216,6 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
         // Insert the location into the database.
         long locationID = addLocation(locationSetting, cityName, cityLatitude, cityLongitude);
 
-        String[] resultStrs = new String[numDays];
-
-
-
         ContentValues[] contentValuesArray = new ContentValues[weatherArray.length()];
 
         for(int i = 0; i < weatherArray.length(); i++) {
@@ -246,12 +242,10 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
             values.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,weatherObject.getInt(OWM_WEATHER_ID));
             values.put(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,weatherObject.getString(OWM_DESCRIPTION));
 
-            resultStrs[i] = "work in progress";
+            contentValuesArray[i] = values;
         }
 
         context.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, contentValuesArray);
-
-        return resultStrs;
     }
 
     /* The date/time conversion code is going to be moved outside the asynctask later,
