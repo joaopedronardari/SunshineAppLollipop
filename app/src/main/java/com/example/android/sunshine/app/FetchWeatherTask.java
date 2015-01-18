@@ -226,7 +226,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
             ContentValues values = new ContentValues();
 
             // Put Values
-
+            values.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, locationID);
             long dateTime = dayForecast.getLong(OWM_DATETIME);
             values.put(WeatherContract.WeatherEntry.COLUMN_DATETEXT,getReadableDateString(dateTime));
             values.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE,dayForecast.getDouble(OWM_PRESSURE));
