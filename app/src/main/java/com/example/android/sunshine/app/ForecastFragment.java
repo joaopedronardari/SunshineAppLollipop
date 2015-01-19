@@ -57,10 +57,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public static final int COL_WEATHER_MIN_TEMP = 4;
     public static final int COL_LOCATION_SETTING = 5;
 
-    public ForecastFragment() {
-
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -115,10 +111,16 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Calling new activity
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, "placeholder");
-                startActivity(intent);
+
+                SimpleCursorAdapter adapter = (SimpleCursorAdapter) parent.getAdapter();
+                Cursor cursor = adapter.getCursor();
+
+                if (cursor != null && cursor.moveToPosition(position)) {
+                    // Calling new activity
+                    Intent intent = new Intent(getActivity(), DetailActivity.class)
+                            .putExtra(WeatherContract.WeatherEntry.COLUMN_DATETEXT, cursor.getString(COL_WEATHER_DATE));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -149,9 +151,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        updateWeather();
+    public void onResume() {
+        super.onResume();
+        if (mLocation != null && !mLocation.equals(Util.getPreferenceLocation(getActivity()))) {
+            getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
+        }
     }
 
     @Override
