@@ -54,7 +54,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
-                android:id="@+id/imageView"
+                android:id="@+id/list_item_icon"
                 android:src="@drawable/ic_launcher" />
 
             <TextView

@@ -20,7 +20,7 @@
             <ImageView
                 android:layout_width="73dp"
                 android:layout_height="62dp"
-                android:id="@+id/imageView"
+                android:id="@+id/list_item_icon"
                 android:src="@drawable/ic_launcher" />
         </LinearLayout>
 
