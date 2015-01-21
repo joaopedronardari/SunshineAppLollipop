@@ -35,7 +35,7 @@ public class ForecastAdapter extends CursorAdapter {
         String dateString = cursor.getString(ForecastFragment.COL_WEATHER_DATE);
         // Find TextView and set formatted date on it
         TextView dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
-        dateView.setText(Utility.getFriendlyDayString(context, dateString));
+        dateView.setText((dateString)); // FIX-ME Friendly date
 
         // Read weather forecast from cursor
         String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
@@ -44,7 +44,7 @@ public class ForecastAdapter extends CursorAdapter {
         descriptionView.setText(description);
 
         // Read user preference for metric or imperial temperature units
-        boolean isMetric = Utility.isMetric(context);
+        boolean isMetric = Util.isMetric(context);
 
         // Read high temperature from cursor
         float high = cursor.getFloat(ForecastFragment.COL_WEATHER_MAX_TEMP);
