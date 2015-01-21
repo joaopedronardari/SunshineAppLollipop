@@ -35,7 +35,7 @@ public class ForecastAdapter extends CursorAdapter {
         String dateString = cursor.getString(ForecastFragment.COL_WEATHER_DATE);
         // Find TextView and set formatted date on it
         TextView dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
-        dateView.setText((dateString)); // FIX-ME Friendly date
+        dateView.setText(Util.getFriendlyDayString(context, dateString));
 
         // Read weather forecast from cursor
         String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);

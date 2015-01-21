@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.android.sunshine.app.data.WeatherContract;
@@ -56,9 +55,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
         String[] weatherForecasts = null;
 
         String format = "json";
-        String unit = PreferenceManager.
-                getDefaultSharedPreferences(context).
-                getString(context.getString(R.string.pref_unit_key),"metric");
+        String unit = "metric";
         int numOfDays = 14;
         String locationQuery = params[0];
 
@@ -227,7 +224,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String[]> {
             // Put Values
             values.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, locationID);
             long dateTime = dayForecast.getLong(OWM_DATETIME);
-            values.put(WeatherContract.WeatherEntry.COLUMN_DATETEXT,getReadableDateString(dateTime));
+            values.put(WeatherContract.WeatherEntry.COLUMN_DATETEXT,WeatherContract.getDbDateString(new Date(dateTime * 1000L)));
             values.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE,dayForecast.getDouble(OWM_PRESSURE));
             values.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY,dayForecast.getDouble(OWM_HUMIDITY));
             values.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,dayForecast.getDouble(OWM_WINDSPEED));
