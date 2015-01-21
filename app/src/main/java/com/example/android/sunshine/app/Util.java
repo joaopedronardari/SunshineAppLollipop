@@ -20,4 +20,14 @@ public class Util {
                 context.getString(R.string.pref_unit_default))
                 .equals(context.getString(R.string.pref_unit_default));
     }
+
+    static String formatTemperature(double temperature, boolean isMetric) {
+        double temp;
+        if ( !isMetric ) {
+            temp = 9*temperature/5+32;
+        } else {
+            temp = temperature;
+        }
+        return String.format("%.0fº", temp);
+    }
 }
