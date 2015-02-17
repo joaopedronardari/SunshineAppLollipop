@@ -37,15 +37,15 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     // View references
     private View rootView;
-    private TextView dayView;
-    private TextView dateView;
-    private TextView forecastView;
-    private TextView highView;
-    private TextView lowView;
-    private ImageView iconView;
-    private TextView humidityView;
-    private TextView windView;
-    private TextView pressureView;
+    private TextView mDayView;
+    private TextView mDateView;
+    private TextView mForecastView;
+    private TextView mHighView;
+    private TextView mLowView;
+    private ImageView mIconView;
+    private TextView mHumidityView;
+    private TextView mWindView;
+    private TextView mPressureView;
 
     private static final String[] WEATHER_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -116,17 +116,17 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         // Get Layout References
-        dayView = (TextView) rootView.findViewById(R.id.fragment_detail_day_textview);
-        dateView = (TextView) rootView.findViewById(R.id.fragment_detail_date_textview);
-        forecastView = (TextView) rootView.findViewById(R.id.fragment_detail_forecast_textview);
-        highView = (TextView) rootView.findViewById(R.id.fragment_detail_high_textview);
-        lowView = (TextView) rootView.findViewById(R.id.fragment_detail_low_textview);
+        mDayView = (TextView) rootView.findViewById(R.id.fragment_detail_day_textview);
+        mDateView = (TextView) rootView.findViewById(R.id.fragment_detail_date_textview);
+        mForecastView = (TextView) rootView.findViewById(R.id.fragment_detail_forecast_textview);
+        mHighView = (TextView) rootView.findViewById(R.id.fragment_detail_high_textview);
+        mLowView = (TextView) rootView.findViewById(R.id.fragment_detail_low_textview);
 
-        iconView = (ImageView) rootView.findViewById(R.id.fragment_detail_icon);
+        mIconView = (ImageView) rootView.findViewById(R.id.fragment_detail_icon);
 
-        humidityView = (TextView) rootView.findViewById(R.id.fragment_detail_humidity_textview);
-        windView = (TextView) rootView.findViewById(R.id.fragment_detail_wind_textview);
-        pressureView = (TextView) rootView.findViewById(R.id.fragment_detail_pressure_textview);
+        mHumidityView = (TextView) rootView.findViewById(R.id.fragment_detail_humidity_textview);
+        mWindView = (TextView) rootView.findViewById(R.id.fragment_detail_wind_textview);
+        mPressureView = (TextView) rootView.findViewById(R.id.fragment_detail_pressure_textview);
 
         return rootView;
     }
@@ -186,17 +186,17 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             Context context = getActivity();
 
             // Populate views
-            dayView.setText(Util.getDayName(context, weatherDate));
-            dateView.setText(Util.getFormattedMonthDay(context, weatherDate));
-            forecastView.setText(weatherDesc);
+            mDayView.setText(Util.getDayName(context, weatherDate));
+            mDateView.setText(Util.getFormattedMonthDay(context, weatherDate));
+            mForecastView.setText(weatherDesc);
 
             boolean isMetric = Util.isMetric(context);
-            highView.setText(Util.formatTemperature(context, weatherMaxTemp, isMetric));
-            lowView.setText(Util.formatTemperature(context, weatherMinTemp, isMetric));
+            mHighView.setText(Util.formatTemperature(context, weatherMaxTemp, isMetric));
+            mLowView.setText(Util.formatTemperature(context, weatherMinTemp, isMetric));
 
-            humidityView.setText(context.getString(R.string.format_humidity, weatherHumidity));
-            windView.setText(Util.getFormattedWind(context, weatherWindSpeed, weatherDegrees));
-            pressureView.setText(context.getString(R.string.format_pressure, weatherPressure));
+            mHumidityView.setText(context.getString(R.string.format_humidity, weatherHumidity));
+            mWindView.setText(Util.getFormattedWind(context, weatherWindSpeed, weatherDegrees));
+            mPressureView.setText(context.getString(R.string.format_pressure, weatherPressure));
         }
     }
 
