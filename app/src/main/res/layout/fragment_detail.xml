@@ -9,6 +9,22 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tomorrow"
+                android:id="@+id/fragment_detail_day_textview" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="June 24"
+                android:id="@+id/fragment_detail_date_textview" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -20,15 +36,10 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Today, June 24"
-                    android:id="@+id/fragment_detail_date_textview" />
-
-                <TextView
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="21º"
