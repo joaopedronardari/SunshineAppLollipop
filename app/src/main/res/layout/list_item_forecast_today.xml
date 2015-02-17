@@ -6,13 +6,14 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
         android:weightSum="1"
-        android:padding="20dp"
+        android:padding="16dp"
         >
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center">
@@ -20,7 +21,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Tomorrow"
                 android:id="@+id/list_item_date_textview"
                 android:layout_marginBottom="20dp"
@@ -29,7 +29,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="40º"
                 android:id="@+id/list_item_high_textview"
                 />
@@ -37,7 +36,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="32º"
                 android:id="@+id/list_item_low_textview"
                 />
@@ -45,15 +43,15 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:gravity="center"
             >
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/list_item_icon"
                 android:src="@drawable/ic_launcher" />
 
