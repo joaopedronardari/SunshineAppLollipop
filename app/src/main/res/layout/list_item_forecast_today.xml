@@ -7,14 +7,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:weightSum="1"
         android:padding="16dp"
         >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:gravity="center">
 
@@ -53,12 +52,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/list_item_icon"
-                android:src="@drawable/ic_launcher" />
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Clear"
                 android:id="@+id/list_item_forecast_textview"
                 />

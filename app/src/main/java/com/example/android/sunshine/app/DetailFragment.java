@@ -201,7 +201,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             mWindView.setText(Util.getFormattedWind(context, weatherWindSpeed, weatherDegrees));
             mPressureView.setText(context.getString(R.string.format_pressure, weatherPressure));
 
-            mIconView.setImageResource(R.drawable.ic_launcher);
+            mIconView.setImageResource(Util.getArtResourceForWeatherCondition(weatherId));
         }
     }
 
