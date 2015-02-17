@@ -63,13 +63,14 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
-            WeatherContract.WeatherEntry.COLUMN_PRESSURE
+            WeatherContract.WeatherEntry.COLUMN_PRESSURE,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
     };
 
     private static final int WEATHER_LOADER = 0;
     private String mLocation;
 
-    public static final int COL_WEATHER_ID = 0;
+    public static final int COL_ID = 0;
     public static final int COL_WEATHER_DATE = 1;
     public static final int COL_WEATHER_DESC = 2;
     public static final int COL_WEATHER_MAX_TEMP = 3;
@@ -81,6 +82,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_WEATHER_WIND_SPEED = 7;
     public static final int COL_WEATHER_DEGREES = 8;
     public static final int COL_WEATHER_PRESSURE = 9;
+    public static final int COL_WEATHER_ID = 10;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -176,8 +178,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             float weatherWindSpeed = cursor.getFloat(COL_WEATHER_WIND_SPEED);
             float weatherDegrees = cursor.getFloat(COL_WEATHER_DEGREES);
             float weatherPressure = cursor.getFloat(COL_WEATHER_PRESSURE);
+            int weatherId = cursor.getInt(COL_WEATHER_ID);
 
-            // Share String
+                    // Share String
             mForecastStr = weatherDate + " - " +
                     weatherDesc + " - " +
                     weatherMaxTemp + "/" +
@@ -197,6 +200,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             mHumidityView.setText(context.getString(R.string.format_humidity, weatherHumidity));
             mWindView.setText(Util.getFormattedWind(context, weatherWindSpeed, weatherDegrees));
             mPressureView.setText(context.getString(R.string.format_pressure, weatherPressure));
+
+            mIconView.setImageResource(R.drawable.ic_launcher);
         }
     }
 
