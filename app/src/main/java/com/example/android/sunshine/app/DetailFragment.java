@@ -99,6 +99,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private Intent createShareIntent() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
+
         // FIXME - Deprecated
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         sendIntent.putExtra(Intent.EXTRA_TEXT, mForecastStr + " " + FORECAST_SHARE_HASHTAG);

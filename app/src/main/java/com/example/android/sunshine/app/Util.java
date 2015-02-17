@@ -29,14 +29,14 @@ public class Util {
                 .equals(context.getString(R.string.pref_unit_default));
     }
 
-    static String formatTemperature(double temperature, boolean isMetric) {
+    static String formatTemperature(Context context, double temperature, boolean isMetric) {
         double temp;
         if ( !isMetric ) {
             temp = 9*temperature/5+32;
         } else {
             temp = temperature;
         }
-        return String.format("%.0fº", temp);
+        return context.getString(R.string.format_temperature, temp);
     }
 
     static String formatDate(String dateString) {
